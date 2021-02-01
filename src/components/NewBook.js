@@ -34,7 +34,7 @@ const NewBook = (props) => {
         published,
         genres
       }
-    })
+    });
     console.log('add book...')
 
     setTitle('') // clearing state values
