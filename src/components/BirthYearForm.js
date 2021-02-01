@@ -9,7 +9,7 @@ mutation setBirthYear($author: String!, $birthYear: String!) {
   }
 }
 `
-const BirthYearForm = () => {
+const BirthYearForm = ({authorslist}) => {
   const [author, setAuthor] = useState('');
   const [birthYear, setBirthYear] = useState('');
 
@@ -29,11 +29,9 @@ const BirthYearForm = () => {
     <form onSubmit={submit}>
       <h2>Set Birthyear</h2>
       <div>
-        <label>name <input 
-          type="text" 
-          value={author} 
-          onChange={e => setAuthor(e.target.value)} />
-        </label>
+        <select onChange={e => setAuthor(e.target.value)}>
+          {authorslist.map(a => <option key={a.name} value={a.name}>{a.name}</option>)}
+        </select>
       </div>
       <div>
         <label>born <input 
