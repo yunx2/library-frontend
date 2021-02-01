@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react'
 import { gql, useQuery } from '@apollo/client';
 import Authors from './Authors'
@@ -23,13 +22,11 @@ query {
   }
 }
 `
-
 const App = () => {
   const [page, setPage] = useState('authors')
   const [query, setQuery] = useState(ALL_AUTHORS)
   let result = useQuery(query);
   
-
   if (result.loading) {
     return <div>loading...</div>
   }
