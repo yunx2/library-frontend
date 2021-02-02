@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
+import { SET_BIRTHYEAR, ALL_AUTHORS } from '../queries';
 
-const SET_BIRTHYEAR = gql`
-mutation setBirthYear($author: String!, $birthYear: String!) {
-  editAuthor(author: $author, birthYear: $birthYear) {
-    name
-    born
-  }
-}
-`
 const BirthYearForm = ({authorslist}) => {
   const [author, setAuthor] = useState('');
   const [birthYear, setBirthYear] = useState('');
 
-  const [editAuthor] = useMutation(SET_BIRTHYEAR);
+  const [editAuthor] = useMutation(SET_BIRTHYEAR, {
+    refetchQueries: [{ query: ALL_AUTHORS }]
+  });
   const submit = async (e) => {
     e.preventDefault();
     editAuthor({

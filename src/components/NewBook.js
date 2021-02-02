@@ -1,17 +1,10 @@
 import React, { useState } from 'react';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
+import { CREATE_BOOK, ALL_BOOKS, ALL_AUTHORS } from '../queries';
 
 // these are queries, NOT schema definitions. schema definitions are what you wrote in the backend code. queries are what you input into the graphql playground to test backend
 // a mutation is a kind a query (the kind of query of changes the data)
-const CREATE_BOOK = gql`
- mutation createBook($title: String!, $author: String!, $published: String!, $genres: [String]) {
-  addBook(title: $title, author: $author, published: $published, genres: $genres) {
-    title
-    author
-    published
-  }
- }
- `
+
 const NewBook = (props) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
@@ -19,7 +12,9 @@ const NewBook = (props) => {
   const [genre, setGenre] = useState('')
   const [genres, setGenres] = useState([])
   
-  const [addBook] = useMutation(CREATE_BOOK); // when addBook is called the ADD_BOOK query is executed
+  const [addBook] = useMutation(CREATE_BOOK, {
+    refetchQueries: [{ query: ALL_BOOKS}, { query: ALL_AUTHORS}]
+  }); // when addBook is called the ADD_BOOK query is executed
 
   if (!props.show) {
     return null
